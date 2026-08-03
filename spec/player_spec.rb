@@ -6,7 +6,7 @@ RSpec.describe 'Player Class' do
     expected_name = 'Bob Ross'
     expected_moves = []
     it 'has a name' do
-      expect(test_player.name).to eq(expected_name)
+      expect(test_player.get_name).to eq(expected_name)
     end
 
     it 'has an array for player moves' do

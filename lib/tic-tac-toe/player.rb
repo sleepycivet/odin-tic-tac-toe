@@ -1,8 +1,6 @@
 class Player
-  attr_reader :name
-  def initialize(name)
-    @name = name
-    @moves = []
+  def get_name
+    return name.to_s
   end
 
   def get_moves
@@ -14,5 +12,11 @@ class Player
   end
 
   protected
+  attr_reader :name
   attr_accessor :moves
+
+  def initialize(name)
+    @name = name
+    @moves = []
+  end
 end
