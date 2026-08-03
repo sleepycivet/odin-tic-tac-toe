@@ -12,5 +12,10 @@ RSpec.describe 'Player Class' do
     it 'has an array for player moves' do
       expect(test_player.get_moves).to eq(expected_moves)
     end
+
+    it 'adds a number to the moves array' do
+      test_player.add_move(8)
+      expect(test_player.get_moves).to eq([8])
+    end
   end
 end
