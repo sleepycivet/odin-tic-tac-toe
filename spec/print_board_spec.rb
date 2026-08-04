@@ -4,7 +4,7 @@ RSpec.describe 'Board Class' do
 
   player_1_moves = []
   player_2_moves = []
-  test_board = Board.new(player_1_moves, player_2_moves)
+  test_board = PrintBoard.new(player_1_moves, player_2_moves)
   row_div = "-----------"
 
   expected_row_1 = " 1 | 2 | 3"

@@ -1,4 +1,4 @@
-class Board
+class PrintBoard
   ROW_DIVIDER = "-----------"
 
   def initialize(player_1_moves, player_2_moves)
