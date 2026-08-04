@@ -1,8 +1,8 @@
 class PrintBoard
   ROW_DIVIDER = "-----------"
 
-  def initialize(player_1_moves, player_2_moves)
-    if player_1_moves == [] && player_2_moves == []
+  def initialize(board_array)
+    if board_array == []
       @board_spaces = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     end 
   end  
