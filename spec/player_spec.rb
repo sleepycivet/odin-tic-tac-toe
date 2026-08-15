@@ -54,4 +54,34 @@ RSpec.describe 'Player class mechanics' do
       expect(test_player.get_moves).to eq(expected_output)
     end
   end
+  describe 'mock game between two players' do
+    player_1 = Player.new('Archer')
+    player_1_moves = [1, 5, 8]
+    player_2 = Player.new('Lysandra')
+    player_2_moves = [2, 4]
+    # X | O | 3
+    # O | X | 6
+    # 7 | X | 9
+    # [1, 5, 8]
+    # [2, 4]
+    it 'returns player 1 and player 2 moves arrays correctly' do
+      allow_any_instance_of(Kernel).to receive(:gets).and_return(player_1_moves.shift)
+      player_1.prompt_move()
+
+      allow_any_instance_of(Kernel).to receive(:gets).and_return(player_2_moves.shift)
+      player_2.prompt_move()
+
+      allow_any_instance_of(Kernel).to receive(:gets).and_return(player_1_moves.shift)
+      player_1.prompt_move()
+
+      allow_any_instance_of(Kernel).to receive(:gets).and_return(player_2_moves.shift)
+      player_2.prompt_move()
+
+      allow_any_instance_of(Kernel).to receive(:gets).and_return(player_1_moves.shift)
+      player_1.prompt_move()
+
+      expect(player_1.get_moves).to eq([1,5,8])
+      expect(player_2.get_moves).to eq([2,4])
+    end
+  end
 end
