@@ -4,13 +4,8 @@ require_relative 'tic-tac-toe/player'
 class Game
   def initialize
     # get_players()
-    # Board.new([],[]).create_board()
+    Board.new([],[]).create_board()
   end
-
-  # def new_game
-  #   get_players()
-  #   Board.new([],[]).create_board()
-  # end
 
   def is_win?(move_array)
       won = false
@@ -36,17 +31,23 @@ class Game
       return won
   end
 
-  protected
+  # def display_players
+  #   puts "Player 1 is #{@player_1.get_name}."
+  #   # puts "Player 2 is #{@player_2.get_name}"
+  # end
 
   def get_players
     puts "Welcome to Tic-Tac-Toe."
     puts "Please enter a name for player 1."
-    player_1 = Player.new(gets.chomp)
+    player_1 = Player.new(gets.chomp.to_s)
     puts "Please enter a name for player 2."
-    player_2 = Player.new(gets.chomp)
-    puts "Player 1 is #{player_1.get_name}"
-    puts "Player 2 is #{player_2.get_name}"
+    player_2 = Player.new(gets.chomp.to_s)
+    puts "Player 1 is #{player_1.get_name}."
+    puts "Player 2 is #{player_2.get_name}."
   end
+
+  attr_accessor :player_1, :player_2
+  protected
 end
 
 # Set up board DONE
