@@ -8,9 +8,7 @@ RSpec.describe 'Tic-Tac-Toe Game' do
     it 'displays player names' do
       allow_any_instance_of(Kernel).to receive(:gets).and_return(player_1_name,player_2_name)
       expected_output = "Welcome to Tic-Tac-Toe.\nPlease enter a name for player 1.\nPlease enter a name for player 2.\nPlayer 1 is #{player_1_name}.\nPlayer 2 is #{player_2_name}.\n"
-      # expect(subject.display_players).to output(expected_output).to_stdout
-
-      # expect(test_game.get_players).to eq(player_1_name)
+      # expect{Game.new}.to output(expected_output).to_stdout # can't figure out how to test this method when it's part of initialize so I had to break it out into a function that's callable by itself (hence #new_game)
       expect{test_game.get_players()}.to output(expected_output).to_stdout
     end
   end

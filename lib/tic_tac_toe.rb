@@ -2,38 +2,48 @@ require_relative 'tic-tac-toe/board'
 require_relative 'tic-tac-toe/player'
 
 class Game
-  def initialize
-    # get_players()
-    Board.new([],[]).create_board()
+  
+  # Because I couldn't figure out how to test putting get_players in initialize (;_; which would have been the ideal situation) I am making a separate new_game function that must be called...
+  # I put an if statement in there so that people can't call #new_game while there is an active game but I'll have to see if the tests still pass
+
+  def new_game
+    if @active_game == false
+      get_players()
+      Board.new([],[]).create_board()
+      @active_game = true
+    else
+      puts "There is currently an active game and a new game cannot be started."
+    end
   end
 
   def is_win?(move_array)
-      won = false
-      winning_combos = [
-        [1,2,3], [4,5,6], [7,8,9], # horizontal
-        [1,4,7], [2,5,8], [3,6,9], # vertical
-        [1,5,9], [3,5,7] # diagonal
-      ]
+    won = false
+    winning_combos = [
+      [1,2,3], [4,5,6], [7,8,9], # horizontal
+      [1,4,7], [2,5,8], [3,6,9], # vertical
+      [1,5,9], [3,5,7] # diagonal
+    ]
 
-      while won == false && winning_combos.length > 0 do
-        combo_match = true
-        current_combo = winning_combos.shift
-        current_combo.each do |num|
-          if move_array.include?(num) == false
-            combo_match = false
-          end
-        end
-        if combo_match == true
-          won = true
+    while won == false && winning_combos.length > 0 do
+      combo_match = true
+      current_combo = winning_combos.shift
+      current_combo.each do |num|
+        if move_array.include?(num) == false
+          combo_match = false
         end
       end
+      if combo_match == true
+        won = true
+        @active_game = false
+      end
+    end
 
-      return won
+    return won
   end
 
   # def display_players
   #   puts "Player 1 is #{@player_1.get_name}."
-  #   # puts "Player 2 is #{@player_2.get_name}"
+  #   # puts "Player 2 is #{@player_2.get_name}."
   # end
 
   def get_players
@@ -46,8 +56,12 @@ class Game
     puts "Player 2 is #{player_2.get_name}."
   end
 
-  attr_accessor :player_1, :player_2
   protected
+  attr_accessor :player_1, :player_2, :active_game
+
+  def initialize
+    @active_game = false
+  end
 end
 
 # Set up board DONE
