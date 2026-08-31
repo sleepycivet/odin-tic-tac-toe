@@ -12,6 +12,7 @@ class Game
       @active_game = true
 
       while @active_game == true
+        puts "#{@player_1.get_name} moves = #{@player_1.get_moves} and #{@player_2.get_name} moves = #{@player_2.get_moves}"
         Board.new(@player_1.get_moves, @player_2.get_moves).create_board()
 
         # TODO:// stop players from selecting a space that has already been selected
@@ -86,9 +87,12 @@ class Game
       puts error_message
     else
       if input > 0 and input < 10
-        return input
+        if @player_1.get_moves.include?(input) || @player_2.get_moves.include?(input)
+          puts "Another player has already gone in that area. Pick a cell with a number."
+        else
+          return input
+        end
       end
-      puts error_message
     end
   end
 end

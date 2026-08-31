@@ -9,6 +9,7 @@ class Player
 
   def add_move(number)
     @moves.push(number)
+    @moves.compact!
   end
 
   protected
