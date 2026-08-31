@@ -6,13 +6,33 @@ class Game
   # Because I couldn't figure out how to test putting get_players in initialize (;_; which would have been the ideal situation) I am making a separate new_game function that must be called...
   # I put an if statement in there so that people can't call #new_game while there is an active game but I'll have to see if the tests still pass
 
-  def new_game
+  def start_game
     if @active_game == false
       get_players()
-      Board.new([],[]).create_board()
       @active_game = true
-    else
-      puts "There is currently an active game and a new game cannot be started."
+
+      while @active_game == true
+        Board.new(@player_1.get_moves, @player_2.get_moves).create_board()
+
+        # TODO:// stop players from selecting a space that has already been selected
+        # TODO:// logic for what happens when there's a tie
+
+        if @player_1.get_moves.length == @player_2.get_moves.length
+          puts "#{@player_1.get_name}, enter a number on the board to complete your move."
+
+          player_1.add_move(self.prompt_move())
+          if is_win?(@player_1.get_moves)
+            puts "#{@player_1.get_name} wins!"
+          end
+        else
+          puts "#{@player_2.get_name}, enter a number on the board to complete your move."
+
+          player_2.add_move(self.prompt_move())
+          if is_win?(@player_2.get_moves)
+            puts "#{@player_2.get_name} wins!"
+          end
+        end
+      end
     end
   end
 
@@ -33,6 +53,7 @@ class Game
         end
       end
       if combo_match == true
+        Board.new(@player_1.get_moves, @player_2.get_moves).create_board()
         won = true
         @active_game = false
       end
@@ -41,19 +62,12 @@ class Game
     return won
   end
 
-  # def display_players
-  #   puts "Player 1 is #{@player_1.get_name}."
-  #   # puts "Player 2 is #{@player_2.get_name}."
-  # end
-
   def get_players
     puts "Welcome to Tic-Tac-Toe."
     puts "Please enter a name for player 1."
-    player_1 = Player.new(gets.chomp.to_s)
+    @player_1 = Player.new(gets.chomp.to_s)
     puts "Please enter a name for player 2."
-    player_2 = Player.new(gets.chomp.to_s)
-    puts "Player 1 is #{player_1.get_name}."
-    puts "Player 2 is #{player_2.get_name}."
+    @player_2 = Player.new(gets.chomp.to_s)
   end
 
   protected
@@ -61,6 +75,21 @@ class Game
 
   def initialize
     @active_game = false
+  end
+
+  def prompt_move
+    error_message = "ERROR: Not a valid input. Please enter a number between 1 and 9."
+    input = gets.to_i
+    begin
+      input > 0
+    rescue
+      puts error_message
+    else
+      if input > 0 and input < 10
+        return input
+      end
+      puts error_message
+    end
   end
 end
 
